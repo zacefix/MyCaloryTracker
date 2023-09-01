@@ -1,6 +1,5 @@
 package com.example.onboarding_presentation.components
 
-import android.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -24,9 +23,13 @@ fun UnitTextField(
     onValueChange: (String) -> Unit,
     unit: String,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = TextStyle(color = MaterialTheme.colorScheme.primary, fontSize = 70.sp)
+    textStyle: TextStyle = TextStyle(
+        color = MaterialTheme.colorScheme.primary,
+        fontSize = 70.sp
+    )
 ) {
     val spacing = LocalSpacing.current
+
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.Center
@@ -35,19 +38,18 @@ fun UnitTextField(
             value = value,
             onValueChange = onValueChange,
             textStyle = textStyle,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number
+            ),
             singleLine = true,
             modifier = Modifier
                 .width(IntrinsicSize.Min)
-                .alignBy(LastBaseline))
-         {
-            Spacer(modifier = Modifier.width(spacing.spaceSmall))
-             Text(
-                 text = unit,
-                 modifier = Modifier.alignBy(LastBaseline)
-             )
-        }
-
+                .alignBy(LastBaseline)
+        )
+        Spacer(modifier = Modifier.width(spacing.spaceSmall))
+        Text(
+            text = unit,
+            modifier = Modifier.alignBy(LastBaseline)
+        )
     }
-
 }
