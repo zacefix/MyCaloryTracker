@@ -34,4 +34,5 @@ object AppModule {
         return FilterOutDigits()
     }
 
+
 }
