@@ -1,6 +1,3 @@
 package com.example.tracker_data.remote.dto
 
-interface OpenFoodApi {
-
-
-}
+class SearchDto(products: List<Product>)
