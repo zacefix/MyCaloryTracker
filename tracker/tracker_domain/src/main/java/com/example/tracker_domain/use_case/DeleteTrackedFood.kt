@@ -8,7 +8,7 @@ class DeleteTrackedFood(
 ) {
 
     suspend operator fun invoke(trackedFood: TrackedFood) {
-        repository.deleteTruckedFood(trackedFood)
+        repository.deleteTrackedFood(trackedFood)
     }
 
 }
