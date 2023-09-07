@@ -47,10 +47,10 @@ fun NutrientsHeader(
                     bottomEnd = 50.dp
                 )
             )
-            .background(MaterialTheme.colorScheme.primary)
+            .background(MaterialTheme.colorScheme.secondary)
             .padding(
-                horizontal = spacing.spaceLarge,
-                vertical = spacing.spaceLarge
+                horizontal = spacing.spaceMedium,
+                vertical = spacing.spaceMedium
             )
     ) {
         Row(
@@ -68,7 +68,7 @@ fun NutrientsHeader(
             Column {
                 Text(
                     text = stringResource(id = R.string.your_goal),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
                 UnitDisplay(

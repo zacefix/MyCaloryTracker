@@ -1,5 +1,6 @@
 package com.example.tracker_presentation.tracker_overview
 
+import android.app.Activity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,9 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.R
 import com.example.core.util.UiEvent
@@ -21,15 +24,28 @@ import com.example.tracker_presentation.tracker_overview.components.DaySelector
 import com.example.tracker_presentation.tracker_overview.components.ExpandableMeal
 import com.example.tracker_presentation.tracker_overview.components.NutrientsHeader
 import com.example.tracker_presentation.tracker_overview.components.TrackedFoodItem
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun TrackerOverviewScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNavigateToSearch: (String, Int, Int, Int) -> Unit,
     viewModel: TrackerOverviewViewModel = hiltViewModel()
 ) {
     val spacing = LocalSpacing.current
     val state = viewModel.state
     val context = LocalContext.current
+
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.RefreshActivity -> {
+                    (context as? Activity)?.finish()
+                }
+
+                else -> Unit
+            }
+        }
+    }
 
     LazyColumn(
         modifier = Modifier
@@ -41,7 +57,7 @@ fun TrackerOverviewScreen(
     ) {
         item {
             NutrientsHeader(state = state)
-            Spacer(modifier = Modifier.height(spacing.spaceMedium))
+            Spacer(modifier = Modifier.height(spacing.spaceSmall))
             DaySelector(
                 date = state.date,
                 onPreviousDayClick = { viewModel.onEvent(TrackerOverviewEvent.OnPreviewsDayClick) },
@@ -88,7 +104,12 @@ fun TrackerOverviewScreen(
                                 meal.name.asString(context)
                             ),
                             onClick = {
-
+                                onNavigateToSearch(
+                                    meal.name.asString(context),
+                                    state.date.dayOfMonth,
+                                    state.date.monthValue,
+                                    state.date.year
+                                )
                             },
                             modifier = Modifier.fillMaxWidth()
                         )
